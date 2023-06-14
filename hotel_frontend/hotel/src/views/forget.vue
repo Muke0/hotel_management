@@ -5,9 +5,9 @@
         <div class="big-contain" key="bigContainRegister">
           <div class="btitle">忘记密码</div>
           <div class="bform">
-            <input type="text" placeholder="邮箱" v-model="form.useremail"@blur="emailError">
+            <input type="text" placeholder="邮箱" v-model="form.useremail" @blur="emailError">
             <span class="errTips" v-if="for_emailError">* 邮箱填写错误 *</span>
-            <input type="password" placeholder="新密码" v-model="form.userpwd"@blur="pwdError">
+            <input type="password" placeholder="新密码" v-model="form.userpwd" @blur="pwdError">
             <span class="errTips" v-if="for_pwdError">* 密码填写错误 *</span>
             <input type="password" placeholder="验证码" v-model="form.code">
           </div>

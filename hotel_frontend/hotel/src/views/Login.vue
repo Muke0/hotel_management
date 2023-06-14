@@ -19,7 +19,7 @@
           <div class="bform">
             <input type="text" placeholder="用户名" v-model="form.username">
             <span class="errTips" v-if="existed">* 用户名已经存在！ *</span>
-            <input type="password" placeholder="密码" v-model="form.userpwd"@blur="pwdError">
+            <input type="password" placeholder="密码" v-model="form.userpwd" @blur="pwdError">
             <span class="errTips" v-if="cre_pwdError">* 密码格式填写错误 *</span>
             <input type="email" placeholder="邮箱" v-model="form.useremail" @blur="eamilFormTest">
             <span class="errTips" v-if="emailError">{{eamil_form_error_text}}</span>
