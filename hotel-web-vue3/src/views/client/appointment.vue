@@ -2,35 +2,59 @@
   <headbar></headbar>
   <div class="card">
     <div class="title">
-      需求列表
+      预约列表
+      <el-button @click="dialogFormVisible = true" type="primary">
+        add
+      </el-button>
     </div>
-    <el-dialog v-model="modifyDialogFormVisible" title="处理需求">
-      <el-form :model="modifyform">
-          <el-form-item label="处理时间 格式(2023-06-10-13-10)" :label-width="formLabelWidth">
-            <el-input v-model="modifyform.Dtime" autocomplete="off" />
-          </el-form-item>
-      </el-form>
+    <el-dialog v-model="dialogFormVisible" title="添加预约">
+      <el-form :model="addform">
+        <el-form-item label="用户编号" :label-width="formLabelWidth">
+          <el-input v-model="addform.Uno" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="会员编号" :label-width="formLabelWidth">
+          <el-input v-model="addform.VIPno" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="用户名称" :label-width="formLabelWidth">
+          <el-input v-model="addform.Uname" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="用户性别" :label-width="formLabelWidth">
+          <el-input v-model="addform.Usex" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="用户邮箱" :label-width="formLabelWidth">
+          <el-input v-model="addform.Umail" autocomplete="off" />
+        </el-form-item>
+      </el-form>      
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="modifyDialogFormVisible = false">取消</el-button>
-          <el-button type="primary" @click="onmodify"> 确认 </el-button>
+          <el-button @click="dialogFormVisible = false">取消</el-button>
+          <el-button type="primary" @click="onadd"> 确认 </el-button>
         </span>
       </template>
     </el-dialog>
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="Dno" label="需求ID" width="180" />
-      <el-table-column prop="Dinitiator" label="需求发起人" />
-      <el-table-column prop="Dcontent" label="处理内容" />
-      <el-table-column prop="Ddescription" label="内容描述" />
-
+      <el-table-column prop="Uno" label="用户编号" width="180" />
+      <el-table-column prop="VIPno" label="会员编号" width="180" />
+      <el-table-column prop="Uname" label="用户名称" />
+      <el-table-column prop="Usex" label="用户性别" />
+      <el-table-column prop="Umail" label="用户邮箱" />
       <el-table-column fixed="right" label="操作" width="160">
         <template #default="scope">
           <el-button
             link
             type="primary"
             @click="modifyClick(scope.$index, scope.row)"
-            >处理</el-button
+            >修改</el-button
           >
+          <el-button
+            link
+            type="primary"
+            @click="deleteClick(scope.$index, scope.row)"
+          >
+            <el-icon>
+              <Delete />
+            </el-icon>
+          </el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -53,17 +77,27 @@ export default {
       form: {
         user: "",
       },
+      addform: {
+      Uno: "",
+      VIPno: "",
+      Uname: "",
+      Usex: "",
+      Umail: "",
+      },
       modifyform: {
-        Dno:"",
-        Dtime: "",
+        Sid: "",
+        Sname: "",
+        Sposition: "",
+        Sbasepay: "",
+        Sbonus: "",
+        Sworktime: "",
       },
       data: {
-        Dno: "N/A",
-        Dperformer: "N/A",
-        Dinitiator: "N/A",
-        Dcontent: "N/A",
-        Dtime: "N/A",
-        Ddescription: "N/A",
+        Uno: "N/A",
+        VIPno: "N/A",
+        Uname: "N/A",
+        Usex: "N/A",
+        Umail: "N/A",
       },
       tableData: [],
       dialogFormVisible: false,
@@ -72,33 +106,9 @@ export default {
     };
   },
   mounted() {
-    if (localStorage.getItem('token')) {
-            // 获取用户信息
-            axios.get('/user/info', {
-                headers: {
-                    Authorization: localStorage.getItem('token')
-                }
-            }).then(res => {
-                if (res.data.user_name) {
-                    this.username = res.data.user_name;
-                } else {
-                    ElMessage({
-                        message: res.data.message,
-                        type: 'error',
-                    })
-                    this.$router.push('/login');
-                }
-            }).catch(err => {
-                ElMessage({
-                    message: "错误",
-                    type: 'error',
-                })
-                this.$router.push('/login');
-            })
-        }
     var config = {
       method: "get",
-      url: "http://127.0.0.1:9000/room_Service/service_need",
+      url: "http://127.0.0.1:9000/front_desk/user",
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -106,7 +116,7 @@ export default {
     const _this = this;
     axios(config)
       .then(function (response) {
-        //console.log(response.data);
+        console.log(response.data);
         response.data.forEach((data) => {
           _this.tableData.push(data);
         });
@@ -118,23 +128,24 @@ export default {
   methods: {
     onQuery() {
       this.tableData.forEach((e) => {
-        if (e.Sid == this.form.user) {
+        if (e.Uno == this.form.user) {
           this.data = e;
         }
       });
     },
-    onmodify() {
-      this.modifyDialogFormVisible = false;
+    onadd() {
+      this.dialogFormVisible = false;
+      console.log(this.addform);
       var data = {
-        Dtime:this.modifyform.Dtime,
-        Dperformer:this.username,
-        Dno:this.modifyform.Dno,
+        Uno: this.addform.Uno,
+        VIPno: this.addform.VIPno,
+        Uname: this.addform.Uname,
+        Usex: this.addform.Usex,
+        Umail: this.addform.Umail,
       };
-      console.log(data)
-
       var config = {
-        method: "put",
-        url: "http://127.0.0.1:9000/room_Service/service_need",
+        method: "post",
+        url: "http://127.0.0.1:9000/front_desk/user",
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -146,7 +157,60 @@ export default {
           console.log(response.data);
           var config = {
             method: "get",
-            url: "http://127.0.0.1:9000/room_Service/service_need",
+            url: "http://127.0.0.1:9000/front_desk/user",
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          };
+          axios(config)
+            .then(function (response) {
+              console.log(response.data);
+              _this.tableData = [];
+              response.data.forEach((data) => {
+                _this.tableData.push(data);
+              });
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+      var clearform = {
+        sId: "",
+        sName: "",
+        sPosition: "",
+        sType: "",
+      };
+      this.addform = clearform;
+    },
+    onmodify() {
+      this.modifyDialogFormVisible = false;
+      console.log(this.modifyform);
+      var data = {
+        Uno: String(this.modifyform.Sid),
+        VIPno: this.modifyform.Sname,
+        Uname: this.modifyform.Sposition,
+        Usex: this.modifyform.Sbasepay,
+        Umail: this.modifyform.Sbonus,
+};
+
+      var config = {
+        method: "put",
+        url: "http://127.0.0.1:9000/manager/staff/",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+        data: data,
+      };
+      const _this = this;
+      axios(config)
+        .then(function (response) {
+          console.log(response.data);
+          var config = {
+            method: "get",
+            url: "http://127.0.0.1:9000/manager/staff/",
             headers: {
               Authorization: localStorage.getItem("token"),
             },
@@ -175,8 +239,55 @@ export default {
       };
       this.modifyform = clearform;
     },
+    deleteClick(index, row) {
+      // 发送审核删除请求
+      console.log(index, row);
+      const _this = this;
+
+      var data = {
+        Uno: String(row.Uno),
+      };
+
+      var config = {
+        method: "delete",
+        url: "http://127.0.0.1:9000/front_desk/user/",
+        headers: {
+          Authorization: localStorage.getItem("token"),
+        },
+        data: data,
+      };
+
+      axios(config)
+        .then(function (response) {
+          var config = {
+            method: "get",
+            url: "http://127.0.0.1:9000/front_desk/user/",
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          };
+
+          axios(config)
+            .then(function (response) {
+              console.log(response.data);
+              _this.tableData = [];
+              response.data.forEach((data) => {
+                _this.tableData.push(data);
+              });
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    },
     modifyClick(index, row) {
-      this.modifyform.Dno = row.Dno;
+      this.modifyform.sId = String(row.sId);
+      this.modifyform.sName = row.sName;
+      this.modifyform.sPosition = row.sPosition;
+      this.modifyform.sType = row.sType;
       this.modifyDialogFormVisible = true;
     },
     positionholder(type) {

@@ -42,7 +42,47 @@ const routes = [
     {
         path: "/room_service",
         component: () =>
-            import ("../views/room_service.vue")
+            import ("../views/room_service/room_service.vue")
+    },
+    {
+        path: "/front_desk/user",
+        component: () =>
+            import ("../views/front_desk/user.vue")
+    },
+    {
+        path: "/front_desk/room",
+        component: () =>
+            import ("../views/front_desk/room.vue")
+    },
+    {
+        path: "/front_desk/appointment",
+        component: () =>
+            import ("../views/front_desk/appointment.vue")
+    },
+    {
+        path: "/front_desk/vip",
+        component: () =>
+            import ("../views/front_desk/vip.vue")
+    },
+    {
+        path: "/client/appointment",
+        component: () =>
+            import ("../views/client/appointment.vue")
+    },
+    {
+        path: "/client/room_service",
+        component: () =>
+            import ("../views/client/room_service.vue")
+    },
+    {
+        path: "/client/evalueate",
+        component: () =>
+            import ("../views/client/evaluate.vue")
+    },
+    {
+        path: "/client/bill",
+        component: () =>
+            import ("../views/client/bill.vue")
     },
 ];
 

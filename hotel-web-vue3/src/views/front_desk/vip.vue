@@ -2,7 +2,7 @@
   <headbar></headbar>
   <div name="搜索" class="card">
     <el-form :inline="true" :model="form">
-      <el-form-item label="员工ID">
+      <el-form-item label="会员ID">
         <el-input v-model="form.user" placeholder="ID" />
       </el-form-item>
       <el-form-item>
@@ -10,51 +10,43 @@
       </el-form-item>
     </el-form>
     <el-row>
-      <el-col :span="6"><el-statistic title="职工ID" :value="data.Sid" /></el-col>
-      <el-col :span="6"><el-statistic title="姓名" :value="data.Sname" /></el-col>
-      <el-col :span="6"><el-statistic title="职位" :value="data.Sposition" /></el-col>
-      <el-col :span="6"><el-statistic title="基本工资" :value="data.Sbasepay" /></el-col>
-      <el-col :span="6"><el-statistic title="奖金" :value="data.Sbonus" /></el-col>
-      <el-col :span="6"><el-statistic title="工作时间" :value="data.Sworktime" /></el-col>
+      <el-col :span="6"><el-statistic title="会员编号" :value="data.VIPno" /></el-col>
+      <el-col :span="6"><el-statistic title="会员等级" :value="data.VIPlevel" /></el-col>
+      <el-col :span="6"><el-statistic title="会员权限" :value="data.VIPpower" /></el-col>
+      <el-col :span="6"><el-statistic title="会员时长" :value="data.VIPduration" /></el-col>
+      <el-col :span="6"><el-statistic title="积分" :value="data.VIPpoints" /></el-col>
+      <el-col :span="6"><el-statistic title="会员信息" :value="data.VIPinformation" /></el-col>
     </el-row>
   </div>
   <div class="card">
     <div class="title">
-      员工列表
+      会员列表
       <el-button @click="dialogFormVisible = true" type="primary">
         add
       </el-button>
     </div>
-    <el-dialog v-model="dialogFormVisible" title="添加员工">
+    <el-dialog v-model="dialogFormVisible" title="添加会员">
       <el-form :model="addform">
-        <el-form-item label="员工ID" :label-width="formLabelWidth">
-          <el-input v-model="addform.Sid" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="姓名" :label-width="formLabelWidth">
-          <el-input v-model="addform.Sname" autocomplete="off" />
-        </el-form-item>
-        <el-form-item label="职位" :label-width="formLabelWidth">
-          <el-select
-            v-model="addform.Sposition"
-            :placeholder="positionholder(0)"
-          >
-            <el-option
-              v-for="item in positionOptions"
-              :key="item.value"
-              :lable="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-form-item>
-          <el-form-item label="基本工资" :label-width="formLabelWidth">
-            <el-input v-model="addform.Sbasepay" autocomplete="off" />
+        <el-form :model="addform">
+          <el-form-item label="会员编号" :label-width="formLabelWidth">
+            <el-input v-model="addform.VIPno" autocomplete="off" />
           </el-form-item>
-          <el-form-item label="奖金" :label-width="formLabelWidth">
-            <el-input v-model="addform.Sbonus" autocomplete="off" />
+          <el-form-item label="会员等级" :label-width="formLabelWidth">
+            <el-input v-model="addform.VIPlevel" autocomplete="off" />
           </el-form-item>
-          <el-form-item label="工作时间" :label-width="formLabelWidth">
-            <el-input v-model="addform.Sworktime" autocomplete="off" />
+          <el-form-item label="会员权限" :label-width="formLabelWidth">
+            <el-input v-model="addform.VIPpower" autocomplete="off" />
           </el-form-item>
+          <el-form-item label="会员时长" :label-width="formLabelWidth">
+            <el-input v-model="addform.VIPduration" autocomplete="off" />
+          </el-form-item>
+          <el-form-item label="积分" :label-width="formLabelWidth">
+            <el-input v-model="addform.VIPpoints" autocomplete="off" />
+          </el-form-item>
+          <el-form-item label="会员信息" :label-width="formLabelWidth">
+            <el-input v-model="addform.VIPinformation" autocomplete="off" />
+          </el-form-item>
+        </el-form>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
@@ -63,36 +55,26 @@
         </span>
       </template>
     </el-dialog>
-    <el-dialog v-model="modifyDialogFormVisible" title="修改员工信息">
+    <el-dialog v-model="modifyDialogFormVisible" title="修改会员信息">
       <el-form :model="modifyform">
-        <el-form-item label="员工ID" :label-width="formLabelWidth">
-          <el-input v-model="modifyform.Sid" autocomplete="off" />
+        <el-form-item label="会员编号" :label-width="formLabelWidth">
+          <el-input v-model="modifyform.VIPno" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="姓名" :label-width="formLabelWidth">
-          <el-input v-model="modifyform.Sname" autocomplete="off" />
+        <el-form-item label="会员等级" :label-width="formLabelWidth">
+          <el-input v-model="modifyform.VIPlevel" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="职位" :label-width="formLabelWidth">
-          <el-select
-            v-model="modifyform.Sposition"
-            :placeholder="positionholder(0)"
-          >
-            <el-option
-              v-for="item in positionOptions"
-              :key="item.value"
-              :lable="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+        <el-form-item label="会员权限" :label-width="formLabelWidth">
+          <el-input v-model="modifyform.VIPpower" autocomplete="off" />
         </el-form-item>
-          <el-form-item label="基本工资" :label-width="formLabelWidth">
-            <el-input v-model="modifyform.Sbasepay" autocomplete="off" />
-          </el-form-item>
-          <el-form-item label="奖金" :label-width="formLabelWidth">
-            <el-input v-model="modifyform.Sbonus" autocomplete="off" />
-          </el-form-item>
-          <el-form-item label="工作时间" :label-width="formLabelWidth">
-            <el-input v-model="modifyform.Sworktime" autocomplete="off" />
-          </el-form-item>
+        <el-form-item label="会员时长" :label-width="formLabelWidth">
+          <el-input v-model="modifyform.VIPduration" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="积分" :label-width="formLabelWidth">
+          <el-input v-model="modifyform.VIPpoints" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="会员信息" :label-width="formLabelWidth">
+          <el-input v-model="modifyform.VIPinformation" autocomplete="off" />
+        </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
@@ -102,26 +84,16 @@
       </template>
     </el-dialog>
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="Sid" label="员工ID" width="180" />
-      <el-table-column prop="Sname" label="姓名" width="180" />
-      <el-table-column prop="Sposition" label="职位" />
-      <el-table-column prop="Sbasepay" label="基本工资" />
-      <el-table-column prop="Sbonus" label="奖金" />
-      <el-table-column prop="Sworktime" label="工作时间" />
-
+      <el-table-column prop="VIPno" label="VIP编号" width="180" />
+      <el-table-column prop="VIPlevel" label="VIP等级" width="180" />
+      <el-table-column prop="VIPpower" label="VIP权限" />
+      <el-table-column prop="VIPduration" label="VIP时长" />
+      <el-table-column prop="VIPpoints" label="VIP积分" />
+      <el-table-column prop="VIPinformation" label="VIP信息" />
       <el-table-column fixed="right" label="操作" width="160">
         <template #default="scope">
-          <el-button
-            link
-            type="primary"
-            @click="modifyClick(scope.$index, scope.row)"
-            >修改</el-button
-          >
-          <el-button
-            link
-            type="primary"
-            @click="deleteClick(scope.$index, scope.row)"
-          >
+          <el-button link type="primary" @click="modifyClick(scope.$index, scope.row)">修改</el-button>
+          <el-button link type="primary" @click="deleteClick(scope.$index, scope.row)">
             <el-icon>
               <Delete />
             </el-icon>
@@ -130,11 +102,7 @@
       </el-table-column>
     </el-table>
     <div style="text-align: center">
-      <el-pagination
-        layout="prev, pager, next"
-        :total="10"
-        style="margin: 0 auto; width: 200px"
-      />
+      <el-pagination layout="prev, pager, next" :total="10" style="margin: 0 auto; width: 200px" />
     </div>
   </div>
 </template>
@@ -149,39 +117,29 @@ export default {
         user: "",
       },
       addform: {
-        Sid: "",
-        Sname: "",
-        Sposition: "",
-        Sbasepay: "",
-        Sbonus: "",
-        Sworktime: "",
+        VIPno: "",
+        VIPlevel: "",
+        VIPpower: "",
+        VIPduration: "",
+        VIPpoints: "",
+        VIPinformation: "",
       },
       modifyform: {
-        Sid: "",
-        Sname: "",
-        Sposition: "",
-        Sbasepay: "",
-        Sbonus: "",
-        Sworktime: "",
+        VIPno: "",
+        VIPlevel: "",
+        VIPpower: "",
+        VIPduration: "",
+        VIPpoints: "",
+        VIPinformation: "",
       },
       data: {
-        Sid: "N/A",
-        Sname: "N/A",
-        Sposition: "N/A",
-        Sbasepay: "N/A",
-        Sbonus: "N/A",
-        Sworktime: "N/A",
+        VIPno: "N/A",
+        VIPlevel: "N/A",
+        VIPpower: "N/A",
+        VIPduration: "N/A",
+        VIPpoints: "N/A",
+        VIPinformation: "N/A",
       },
-      positionOptions: [
-        {
-          value: "前台",
-          label: "前台",
-        },
-        {
-          value: "客房",
-          label: "客房",
-        },
-      ],
       tableData: [],
       dialogFormVisible: false,
       modifyDialogFormVisible: false,
@@ -191,7 +149,7 @@ export default {
   mounted() {
     var config = {
       method: "get",
-      url: "http://127.0.0.1:9000/manager/staff",
+      url: "http://127.0.0.1:9000/front_desk/vip",
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -211,7 +169,7 @@ export default {
   methods: {
     onQuery() {
       this.tableData.forEach((e) => {
-        if (e.Sid == this.form.user) {
+        if (e.VIPno == this.form.user) {
           this.data = e;
         }
       });
@@ -220,16 +178,16 @@ export default {
       this.dialogFormVisible = false;
       console.log(this.addform);
       var data = {
-        Sid: String(this.addform.Sid),
-        Sname: this.addform.Sname,
-        Sposition: this.addform.Sposition,
-        Sbasepay: this.addform.Sbasepay,
-        Sbonus: this.addform.Sbonus,
-        Sworktime: this.addform.Sworktime,
+        VIPno: String(this.addform.VIPno),
+        VIPlevel: this.addform.VIPlevel,
+        VIPpower: this.addform.VIPpower,
+        VIPduration: this.addform.VIPduration,
+        VIPpoints: this.addform.VIPpoints,
+        VIPinformation: this.addform.VIPinformation,
       };
       var config = {
         method: "post",
-        url: "http://127.0.0.1:9000/manager/staff/",
+        url: "http://127.0.0.1:9000/front_desk/vip",
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -241,7 +199,7 @@ export default {
           console.log(response.data);
           var config = {
             method: "get",
-            url: "http://127.0.0.1:9000/manager/staff/",
+            url: "http://127.0.0.1:9000/front_desk/vip",
             headers: {
               Authorization: localStorage.getItem("token"),
             },
@@ -263,10 +221,12 @@ export default {
           console.log(error);
         });
       var clearform = {
-        sId: "",
-        sName: "",
-        sPosition: "",
-        sType: "",
+        VIPno: "",
+        VIPlevel: "",
+        VIPpower: "",
+        VIPduration: "",
+        VIPpoints: "",
+        VIPinformation: "",
       };
       this.addform = clearform;
     },
@@ -274,16 +234,16 @@ export default {
       this.modifyDialogFormVisible = false;
       console.log(this.modifyform);
       var data = {
-        Sid: String(this.modifyform.Sid),
-        Sname: this.modifyform.Sname,
-        Sposition: this.modifyform.Sposition,
-        Sbasepay: this.modifyform.Sbasepay,
-        Sbonus: this.modifyform.Sbonus,
-        Sworktime: this.modifyform.Sworktime,
+        VIPno: String(this.modifyform.VIPno),
+        VIPlevel: this.modifyform.VIPlevel,
+        VIPpower: this.modifyform.VIPpower,
+        VIPduration: this.modifyform.VIPduration,
+        VIPpoints: this.modifyform.VIPpoints,
+        VIPinformation: this.modifyform.VIPinformation,
       };
       var config = {
         method: "put",
-        url: "http://127.0.0.1:9000/manager/staff/",
+        url: "http://127.0.0.1:9000/front_desk/vip",
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -295,7 +255,7 @@ export default {
           console.log(response.data);
           var config = {
             method: "get",
-            url: "http://127.0.0.1:9000/manager/staff/",
+            url: "http://127.0.0.1:9000/front_desk/vip",
             headers: {
               Authorization: localStorage.getItem("token"),
             },
@@ -317,10 +277,12 @@ export default {
           console.log(error);
         });
       var clearform = {
-        sId: "",
-        sName: "",
-        sPosition: "",
-        sType: "",
+        VIPno: "",
+        VIPlevel: "",
+        VIPpower: "",
+        VIPduration: "",
+        VIPpoints: "",
+        VIPinformation: "",
       };
       this.modifyform = clearform;
     },
@@ -330,12 +292,12 @@ export default {
       const _this = this;
 
       var data = {
-        Sid: String(row.Sid),
+        VIPno: String(row.VIPno),
       };
 
       var config = {
         method: "delete",
-        url: "http://127.0.0.1:9000/manager/staff/",
+        url: "http://127.0.0.1:9000/front_desk/vip",
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -346,7 +308,7 @@ export default {
         .then(function (response) {
           var config = {
             method: "get",
-            url: "http://127.0.0.1:9000/manager/staff/",
+            url: "http://127.0.0.1:9000/front_desk/vip",
             headers: {
               Authorization: localStorage.getItem("token"),
             },
@@ -369,17 +331,13 @@ export default {
         });
     },
     modifyClick(index, row) {
-      this.modifyform.sId = String(row.sId);
-      this.modifyform.sName = row.sName;
-      this.modifyform.sPosition = row.sPosition;
-      this.modifyform.sType = row.sType;
+      this.modifyform.VIPno = String(row.VIPno);
+      this.modifyform.VIPlevel = row.VIPlevel;
+      this.modifyform.VIPpower = row.VIPpower;
+      this.modifyform.VIPduration = row.VIPduration;
+      this.modifyform.VIPpoints = row.VIPpoints;
+      this.modifyform.VIPinformation = row.VIPinformation;
       this.modifyDialogFormVisible = true;
-    },
-    positionholder(type) {
-      return type == 1 ? this.modifyform.sPosition : this.addform.sPosition;
-    },
-    typeholder(type) {
-      return type == 1 ? this.modifyform.sType : this.addform.sType;
     },
   },
 };

@@ -38,6 +38,9 @@ app.use(expressJWT({ secret: config.jwtSecretKey })
 const userRouter = require('./router/user')
 app.use('/user', userRouter)
 
+const clientRouter = require('./router/client')
+app.use('/client', clientRouter)
+
 const roomServiceRouter = require('./router/room_service.js')
 app.use('/room_service', roomServiceRouter)
 

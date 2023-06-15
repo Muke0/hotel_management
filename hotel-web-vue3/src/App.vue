@@ -1,35 +1,39 @@
 <template>
   <el-menu default-active="1" class="sidebar">
     <div class="title">酒店管理系统</div>
-    <el-sub-menu index="1" v-if="userIdentity == 'client'">
+    <el-sub-menu index="1" v-show="userIdentity == 'client'">
       <template #title>
         <el-icon><Menu /></el-icon>
         <span class="menu">客户入口</span>
       </template>
-      <el-menu-item index="1-1"  class="menu-item" @click="toTarget('/review')">客户服务</el-menu-item>
+      <el-menu-item index="1-1"  class="menu-item" @click="toTarget('/client/appointment')">预约服务</el-menu-item>
+      <el-menu-item index="1-1"  class="menu-item" @click="toTarget('/client/room_service')">客房服务请求</el-menu-item>
+      <el-menu-item index="1-1"  class="menu-item" @click="toTarget('/client/evaluate')">服务评价</el-menu-item>
+      <el-menu-item index="1-1"  class="menu-item" @click="toTarget('/client/bill')">账单</el-menu-item>
     </el-sub-menu>
-    <el-sub-menu index="2" v-if="userIdentity == 'manager'">
+    <el-sub-menu index="2" v-show="userIdentity == 'manager'">
       <template #title>
         <el-icon><Menu /></el-icon>
         <span class="menu">经理入口</span>
       </template>
       <el-menu-item index="2-1" class="menu-item" @click="toTarget('/staff')">员工管理</el-menu-item>
     </el-sub-menu>
-    <el-sub-menu index="3" v-if="userIdentity == 'roomservice'">
+    <el-sub-menu index="3" v-show="userIdentity == 'roomservice'">
       <template #title>
         <el-icon><Menu /></el-icon>
         <span class="menu">客房人员入口</span>
       </template>
       <el-menu-item index="3-1" class="menu-item" @click="toTarget('/room_service')">服务需求</el-menu-item>
     </el-sub-menu>
-    <el-sub-menu index="4" v-if="userIdentity == 'frontdesk'">
+    <el-sub-menu index="4" v-show="userIdentity == 'frontdesk'">
       <template #title>
         <el-icon><Menu /></el-icon>
         <span class="menu">前台人员入口</span>
       </template>
-      <el-menu-item index="4-1" class="menu-item" @click="toTarget('/review')">房间信息</el-menu-item>
-      <el-menu-item index="4-2" class="menu-item" @click="toTarget('/review')">会员信息</el-menu-item>
-      <el-menu-item index="4-3" class="menu-item" @click="toTarget('/review')">预约信息</el-menu-item>
+      <el-menu-item index="4-1" class="menu-item" @click="toTarget('/front_desk/room')">房间信息</el-menu-item>
+      <el-menu-item index="4-2" class="menu-item" @click="toTarget('/front_desk/vip')">会员信息</el-menu-item>
+      <el-menu-item index="4-3" class="menu-item" @click="toTarget('/front_desk/appointment')">预约信息</el-menu-item>
+      <el-menu-item index="4-4" class="menu-item" @click="toTarget('/front_desk/user')">用户信息</el-menu-item>
     </el-sub-menu>
   </el-menu>
   <div class="container">

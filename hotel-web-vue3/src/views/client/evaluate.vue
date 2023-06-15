@@ -2,7 +2,7 @@
   <headbar></headbar>
   <div name="搜索" class="card">
     <el-form :inline="true" :model="form">
-      <el-form-item label="员工ID">
+      <el-form-item label="用户ID">
         <el-input v-model="form.user" placeholder="ID" />
       </el-form-item>
       <el-form-item>
@@ -10,12 +10,11 @@
       </el-form-item>
     </el-form>
     <el-row>
-      <el-col :span="6"><el-statistic title="职工ID" :value="data.Sid" /></el-col>
-      <el-col :span="6"><el-statistic title="姓名" :value="data.Sname" /></el-col>
-      <el-col :span="6"><el-statistic title="职位" :value="data.Sposition" /></el-col>
-      <el-col :span="6"><el-statistic title="基本工资" :value="data.Sbasepay" /></el-col>
-      <el-col :span="6"><el-statistic title="奖金" :value="data.Sbonus" /></el-col>
-      <el-col :span="6"><el-statistic title="工作时间" :value="data.Sworktime" /></el-col>
+      <el-col :span="6"><el-statistic title="用户身份证" :value="data.Uno" /></el-col>
+      <el-col :span="6"><el-statistic title="会员编号" :value="data.VIPno" /></el-col>
+      <el-col :span="6"><el-statistic title="用户姓名" :value="data.Uname" /></el-col>
+      <el-col :span="6"><el-statistic title="用户性别" :value="data.Usex" /></el-col>
+      <el-col :span="6"><el-statistic title="用户邮箱" :value="data.Umail" /></el-col>
     </el-row>
   </div>
   <div class="card">
@@ -25,37 +24,24 @@
         add
       </el-button>
     </div>
-    <el-dialog v-model="dialogFormVisible" title="添加员工">
+    <el-dialog v-model="dialogFormVisible" title="添加会员">
       <el-form :model="addform">
-        <el-form-item label="员工ID" :label-width="formLabelWidth">
-          <el-input v-model="addform.Sid" autocomplete="off" />
+        <el-form-item label="用户编号" :label-width="formLabelWidth">
+          <el-input v-model="addform.Uno" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="姓名" :label-width="formLabelWidth">
-          <el-input v-model="addform.Sname" autocomplete="off" />
+        <el-form-item label="会员编号" :label-width="formLabelWidth">
+          <el-input v-model="addform.VIPno" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="职位" :label-width="formLabelWidth">
-          <el-select
-            v-model="addform.Sposition"
-            :placeholder="positionholder(0)"
-          >
-            <el-option
-              v-for="item in positionOptions"
-              :key="item.value"
-              :lable="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+        <el-form-item label="用户名称" :label-width="formLabelWidth">
+          <el-input v-model="addform.Uname" autocomplete="off" />
         </el-form-item>
-          <el-form-item label="基本工资" :label-width="formLabelWidth">
-            <el-input v-model="addform.Sbasepay" autocomplete="off" />
-          </el-form-item>
-          <el-form-item label="奖金" :label-width="formLabelWidth">
-            <el-input v-model="addform.Sbonus" autocomplete="off" />
-          </el-form-item>
-          <el-form-item label="工作时间" :label-width="formLabelWidth">
-            <el-input v-model="addform.Sworktime" autocomplete="off" />
-          </el-form-item>
-      </el-form>
+        <el-form-item label="用户性别" :label-width="formLabelWidth">
+          <el-input v-model="addform.Usex" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="用户邮箱" :label-width="formLabelWidth">
+          <el-input v-model="addform.Umail" autocomplete="off" />
+        </el-form-item>
+      </el-form>      
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogFormVisible = false">取消</el-button>
@@ -65,34 +51,21 @@
     </el-dialog>
     <el-dialog v-model="modifyDialogFormVisible" title="修改员工信息">
       <el-form :model="modifyform">
-        <el-form-item label="员工ID" :label-width="formLabelWidth">
-          <el-input v-model="modifyform.Sid" autocomplete="off" />
+        <el-form-item label="用户编号" :label-width="formLabelWidth">
+          <el-input v-model="modifyform.Uno" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="姓名" :label-width="formLabelWidth">
-          <el-input v-model="modifyform.Sname" autocomplete="off" />
+        <el-form-item label="会员编号" :label-width="formLabelWidth">
+          <el-input v-model="modifyform.VIPno" autocomplete="off" />
         </el-form-item>
-        <el-form-item label="职位" :label-width="formLabelWidth">
-          <el-select
-            v-model="modifyform.Sposition"
-            :placeholder="positionholder(0)"
-          >
-            <el-option
-              v-for="item in positionOptions"
-              :key="item.value"
-              :lable="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+        <el-form-item label="用户名称" :label-width="formLabelWidth">
+          <el-input v-model="modifyform.Uname" autocomplete="off" />
         </el-form-item>
-          <el-form-item label="基本工资" :label-width="formLabelWidth">
-            <el-input v-model="modifyform.Sbasepay" autocomplete="off" />
-          </el-form-item>
-          <el-form-item label="奖金" :label-width="formLabelWidth">
-            <el-input v-model="modifyform.Sbonus" autocomplete="off" />
-          </el-form-item>
-          <el-form-item label="工作时间" :label-width="formLabelWidth">
-            <el-input v-model="modifyform.Sworktime" autocomplete="off" />
-          </el-form-item>
+        <el-form-item label="用户性别" :label-width="formLabelWidth">
+          <el-input v-model="modifyform.Usex" autocomplete="off" />
+        </el-form-item>
+        <el-form-item label="用户邮箱" :label-width="formLabelWidth">
+          <el-input v-model="modifyform.Umail" autocomplete="off" />
+        </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
@@ -102,13 +75,11 @@
       </template>
     </el-dialog>
     <el-table :data="tableData" stripe style="width: 100%">
-      <el-table-column prop="Sid" label="员工ID" width="180" />
-      <el-table-column prop="Sname" label="姓名" width="180" />
-      <el-table-column prop="Sposition" label="职位" />
-      <el-table-column prop="Sbasepay" label="基本工资" />
-      <el-table-column prop="Sbonus" label="奖金" />
-      <el-table-column prop="Sworktime" label="工作时间" />
-
+      <el-table-column prop="Uno" label="用户编号" width="180" />
+      <el-table-column prop="VIPno" label="会员编号" width="180" />
+      <el-table-column prop="Uname" label="用户名称" />
+      <el-table-column prop="Usex" label="用户性别" />
+      <el-table-column prop="Umail" label="用户邮箱" />
       <el-table-column fixed="right" label="操作" width="160">
         <template #default="scope">
           <el-button
@@ -149,12 +120,11 @@ export default {
         user: "",
       },
       addform: {
-        Sid: "",
-        Sname: "",
-        Sposition: "",
-        Sbasepay: "",
-        Sbonus: "",
-        Sworktime: "",
+      Uno: "",
+      VIPno: "",
+      Uname: "",
+      Usex: "",
+      Umail: "",
       },
       modifyform: {
         Sid: "",
@@ -165,23 +135,12 @@ export default {
         Sworktime: "",
       },
       data: {
-        Sid: "N/A",
-        Sname: "N/A",
-        Sposition: "N/A",
-        Sbasepay: "N/A",
-        Sbonus: "N/A",
-        Sworktime: "N/A",
+        Uno: "N/A",
+        VIPno: "N/A",
+        Uname: "N/A",
+        Usex: "N/A",
+        Umail: "N/A",
       },
-      positionOptions: [
-        {
-          value: "前台",
-          label: "前台",
-        },
-        {
-          value: "客房",
-          label: "客房",
-        },
-      ],
       tableData: [],
       dialogFormVisible: false,
       modifyDialogFormVisible: false,
@@ -191,7 +150,7 @@ export default {
   mounted() {
     var config = {
       method: "get",
-      url: "http://127.0.0.1:9000/manager/staff",
+      url: "http://127.0.0.1:9000/front_desk/user",
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -211,7 +170,7 @@ export default {
   methods: {
     onQuery() {
       this.tableData.forEach((e) => {
-        if (e.Sid == this.form.user) {
+        if (e.Uno == this.form.user) {
           this.data = e;
         }
       });
@@ -220,16 +179,15 @@ export default {
       this.dialogFormVisible = false;
       console.log(this.addform);
       var data = {
-        Sid: String(this.addform.Sid),
-        Sname: this.addform.Sname,
-        Sposition: this.addform.Sposition,
-        Sbasepay: this.addform.Sbasepay,
-        Sbonus: this.addform.Sbonus,
-        Sworktime: this.addform.Sworktime,
+        Uno: this.addform.Uno,
+        VIPno: this.addform.VIPno,
+        Uname: this.addform.Uname,
+        Usex: this.addform.Usex,
+        Umail: this.addform.Umail,
       };
       var config = {
         method: "post",
-        url: "http://127.0.0.1:9000/manager/staff/",
+        url: "http://127.0.0.1:9000/front_desk/user",
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -241,7 +199,7 @@ export default {
           console.log(response.data);
           var config = {
             method: "get",
-            url: "http://127.0.0.1:9000/manager/staff/",
+            url: "http://127.0.0.1:9000/front_desk/user",
             headers: {
               Authorization: localStorage.getItem("token"),
             },
@@ -274,13 +232,13 @@ export default {
       this.modifyDialogFormVisible = false;
       console.log(this.modifyform);
       var data = {
-        Sid: String(this.modifyform.Sid),
-        Sname: this.modifyform.Sname,
-        Sposition: this.modifyform.Sposition,
-        Sbasepay: this.modifyform.Sbasepay,
-        Sbonus: this.modifyform.Sbonus,
-        Sworktime: this.modifyform.Sworktime,
-      };
+        Uno: String(this.modifyform.Sid),
+        VIPno: this.modifyform.Sname,
+        Uname: this.modifyform.Sposition,
+        Usex: this.modifyform.Sbasepay,
+        Umail: this.modifyform.Sbonus,
+};
+
       var config = {
         method: "put",
         url: "http://127.0.0.1:9000/manager/staff/",
@@ -330,12 +288,12 @@ export default {
       const _this = this;
 
       var data = {
-        Sid: String(row.Sid),
+        Uno: String(row.Uno),
       };
 
       var config = {
         method: "delete",
-        url: "http://127.0.0.1:9000/manager/staff/",
+        url: "http://127.0.0.1:9000/front_desk/user/",
         headers: {
           Authorization: localStorage.getItem("token"),
         },
@@ -346,7 +304,7 @@ export default {
         .then(function (response) {
           var config = {
             method: "get",
-            url: "http://127.0.0.1:9000/manager/staff/",
+            url: "http://127.0.0.1:9000/front_desk/user/",
             headers: {
               Authorization: localStorage.getItem("token"),
             },
@@ -369,12 +327,10 @@ export default {
         });
     },
     modifyClick(index, row) {
-      this.modifyform.Sid = String(row.Sid);
-      this.modifyform.Sname = row.Sname;
-      this.modifyform.Sposition = row.Sposition;
-      this.modifyform.Sbasepay = row.Sbasepay;
-      this.modifyform.Sbonus = row.Sbonus;
-      this.modifyform.Sworktime = row.Sworktime;
+      this.modifyform.sId = String(row.sId);
+      this.modifyform.sName = row.sName;
+      this.modifyform.sPosition = row.sPosition;
+      this.modifyform.sType = row.sType;
       this.modifyDialogFormVisible = true;
     },
     positionholder(type) {
